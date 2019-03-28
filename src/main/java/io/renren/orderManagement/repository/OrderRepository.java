@@ -33,4 +33,19 @@ public interface OrderRepository extends PagingAndSortingRepository<OrderForm, I
             "from CommentTb ct,CommodityInfo ci,UserInfo ui\n" +
             "where ct.commodityId=ci.goodsId and ui.userInfoId=ct.userInfoId and ci.mvId=?1")
     Page<Object[]> findComment(@Param("mvId") String mvId, Pageable page);
+
+    /**
+     * @Author 么红帅
+     * @Description //TODO 根据评级筛选评价，1-2为差评，3-3为中评，4-5为差评
+     * @Date 19:01 2019/3/28
+     * @Param [mvId, star1, star2, page]
+     * @return org.springframework.data.domain.Page<java.lang.Object[]>
+     **/
+    @Query(value = "select ci.goodsName,ui.userInfoName,ct.commentStar,ct.createTime,ct.commentContent\n" +
+            "from CommentTb ct,CommodityInfo ci,UserInfo ui\n" +
+            "where ct.commodityId=ci.goodsId and ui.userInfoId=ct.userInfoId and ci.mvId=?1 and ci.commentStar between ?2 and ?3")
+    Page<Object[]> findCommentByStar(@Param("mvId") String mvId, 
+                                     @Param("star1") String star1, 
+                                     @Param("star2") String star2, 
+                                     Pageable page);
 }
