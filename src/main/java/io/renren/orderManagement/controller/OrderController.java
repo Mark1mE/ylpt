@@ -107,7 +107,4 @@ public class OrderController {
                                             @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize) {
         return orderService.findCommentsByCommentStar(mvId, star1, star2, pageNum, pageSize);
     }
-
-    //test
-
 }
