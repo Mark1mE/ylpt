@@ -44,7 +44,7 @@ public interface OrderRepository extends PagingAndSortingRepository<OrderForm, I
     @Query(value = "select ci.goodsName,ui.userInfoName,ct.commentStar,ct.createTime,ct.commentContent\n" +
             "from CommentTb ct,CommodityInfo ci,UserInfo ui\n" +
             "where ct.commodityId=ci.goodsId and ui.userInfoId=ct.userInfoId\n" +
-            "and ci.mvId=?1 and ci.commentStar between ?2 and ?3")
+            "and ci.mvId=?1 and ct.commentStar between ?2 and ?3")
     Page<Object[]> findCommentByStar(@Param("mvId") String mvId, 
                                      @Param("star1") Integer star1,
                                      @Param("star2") Integer star2,
