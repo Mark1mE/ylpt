@@ -42,4 +42,10 @@ public class OrderService {
         Page<Object[]> page = orderRepository.findComment(mvId, request);
         return page;
     }
+
+    public Page<Object[]> findCommentsByCommentStar(String mvId, Integer star1, Integer star2, Integer pageNum, Integer pageSize) {
+        PageRequest request = new PageRequest(pageNum, pageSize, null);
+        Page<Object[]> page = orderRepository.findCommentByStar(mvId, star1, star2, request);
+        return page;
+    }
 }

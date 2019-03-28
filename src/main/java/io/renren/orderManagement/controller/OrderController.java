@@ -101,4 +101,11 @@ public class OrderController {
         return orderService.getCommentsByMvId(mvId, pageNum - 1, pageSize);
     }
 
+    @GetMapping("/comments/star")
+    public Page<Object[]> getCommentsByStar(@RequestParam String mvId, @RequestParam Integer star1, @RequestParam Integer star2,
+                                            @RequestParam(defaultValue = "1",value = "currentPage") Integer pageNum,
+                                            @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize) {
+        return orderService.findCommentsByCommentStar(mvId, star1, star2, pageNum, pageSize);
+    }
+
 }
