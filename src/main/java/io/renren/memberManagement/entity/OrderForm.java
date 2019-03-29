@@ -1,4 +1,4 @@
-package io.renren.orderManagement.entity;
+package io.renren.memberManagement.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,10 +9,10 @@ import java.util.Date;
  * @author: 么红帅
  * @date: 2019/3/25 15:41
  */
-@Entity
-public class OrderDetail {
-    //这里是自增主键吗？
+public class OrderForm {
+
     @Id
+    //这里是自增主键吗？
     private int orderId;
     //物流id
     private int shippingId;
@@ -22,6 +22,8 @@ public class OrderDetail {
     private String seriesNum;
     //用户信息表主键
     private String userInfoId;
+    //商家信息表主键
+    private String merchantInfoId;
     //订单类型（字典表:商品型，服务型）
     private int orderType;
     //订单总金额
@@ -87,6 +89,14 @@ public class OrderDetail {
 
     public void setUserInfoId(String userInfoId) {
         this.userInfoId = userInfoId;
+    }
+
+    public String getMerchantInfoId() {
+        return merchantInfoId;
+    }
+
+    public void setMerchantInfoId(String merchantInfoId) {
+        this.merchantInfoId = merchantInfoId;
     }
 
     public int getOrderType() {
