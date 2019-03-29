@@ -30,7 +30,7 @@ public class OrderController {
      * @Description //TODO 获取所有订单的分页数据
      * @Date 12:54 2019/3/26
      * @Param [merchantInfoId, pageNum为1...n的数据，调用时代码会自动-1, pageSize]
-     * @return [merchantInfoId, pageNum, pageSize]
+     * @return
      **/
     @GetMapping("/orderList")
     //每一条记录还是所有字段，还未筛选
@@ -45,7 +45,7 @@ public class OrderController {
      * @Description //TODO 根据订单状态获取订单的分页数据
      * @Date 23:28 2019/3/27
      * @Param [merchantInfoId, orderStatus, pageNum, pageSize]
-     * @return [merchantInfoId, orderStatus, pageNum, pageSize]
+     * @return
      **/
     @GetMapping("/orderList/orderStatus")
     public Page<OrderForm> getOrderListByStatus(@RequestParam String merchantInfoId, @RequestParam Integer orderStatus,
@@ -84,7 +84,7 @@ public class OrderController {
      * @Description //TODO 根据订单号更改用户收货地址
      * @Date 20:41 2019/3/27
      * @Param [seriesNum, userAddress]
-     * @return [seriesNum, userAddress]
+     * @return
      **/
     @PostMapping("/orderList/orderInfo/userAddress")
     public void updateUserAddress(@RequestParam String seriesNum,
@@ -94,6 +94,13 @@ public class OrderController {
         orderService.updateUserAddress(orderDetail);
     }
 
+    /**
+     * @Author 么红帅
+     * @Description //TODO 获取对商家的所有评价
+     * @Date 13:23 2019/3/29
+     * @Param [mvId, pageNum, pageSize]
+     * @return org.springframework.data.domain.Page<java.lang.Object[]>
+     **/
     @GetMapping("/comments")
     public Page<Object[]> getAllComments(@RequestParam String mvId,
                                          @RequestParam(defaultValue = "1",value = "currentPage") Integer pageNum,
@@ -101,10 +108,17 @@ public class OrderController {
         return orderService.getCommentsByMvId(mvId, pageNum - 1, pageSize);
     }
 
+    /**
+     * @Author 么红帅
+     * @Description //TODO 根据评级获取对商家的评价
+     * @Date 13:23 2019/3/29
+     * @Param [mvId, star1, star2, pageNum, pageSize]
+     * @return org.springframework.data.domain.Page<java.lang.Object[]>
+     **/
     @GetMapping("/comments/star")
     public Page<Object[]> getCommentsByStar(@RequestParam String mvId, @RequestParam Integer star1, @RequestParam Integer star2,
                                             @RequestParam(defaultValue = "1",value = "currentPage") Integer pageNum,
                                             @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize) {
-        return orderService.findCommentsByCommentStar(mvId, star1, star2, pageNum, pageSize);
+        return orderService.findCommentsByCommentStar(mvId, star1, star2, pageNum - 1, pageSize);
     }
 }

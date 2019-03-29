@@ -24,7 +24,7 @@ public class MemberGroupController {
      * @Description //TODO 获取会员群组及对应的人数
      * @Date 13:02 2019/3/26
      * @Param []
-     * @return []
+     * @return
      **/
     @GetMapping("/memberGroupAndCount")
     public List<MemberGroupAndCount> getMemberGroupAndCount() {
