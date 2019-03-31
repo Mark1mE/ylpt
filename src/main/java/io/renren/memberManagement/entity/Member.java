@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * @description: 会员表
+ * @description: 会员表 根据用户模块部分创建的，但是有问题哦，需要和商家模块那边整合一下吧
  * @author: 么红帅
  * @date: 2019/3/24 21:49
  */
