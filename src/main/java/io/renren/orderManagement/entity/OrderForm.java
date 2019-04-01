@@ -1,7 +1,11 @@
 package io.renren.orderManagement.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -10,12 +14,15 @@ import java.util.Date;
  * @date: 2019/3/25 15:41
  */
 @Entity
+@Table(name = "order_form")
+@Data
+@EntityListeners(AuditingEntityListener.class)
 public class OrderForm {
-    //这里是自增主键吗？
+    //订单表主键
     @Id
-    private int orderId;
+    private String orderId;
     //物流id
-    private int shippingId;
+    private Long shippingId;
     //订单状态(0-待付款/1-待发货/2-待收货/3-交易成功/4-交易关闭/5-已取消/6-退款中)
     private int orderStatus;
     //订单编号
@@ -43,164 +50,14 @@ public class OrderForm {
     //订单是否结算完成
     private boolean settlement;
     //创建时间
+    @CreatedDate
     private Date createTime;
     //创建用户id
     private String createUser;
     //修改时间
+    @LastModifiedDate
     private Date updateTime;
     //修改用户id
     private String updateUser;
-
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public int getShippingId() {
-        return shippingId;
-    }
-
-    public void setShippingId(int shippingId) {
-        this.shippingId = shippingId;
-    }
-
-    public int getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(int orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public String getSeriesNum() {
-        return seriesNum;
-    }
-
-    public void setSeriesNum(String seriesNum) {
-        this.seriesNum = seriesNum;
-    }
-
-    public String getUserInfoId() {
-        return userInfoId;
-    }
-
-    public void setUserInfoId(String userInfoId) {
-        this.userInfoId = userInfoId;
-    }
-
-    public String getMerchantInfoId() {
-        return merchantInfoId;
-    }
-
-    public void setMerchantInfoId(String merchantInfoId) {
-        this.merchantInfoId = merchantInfoId;
-    }
-
-    public int getOrderType() {
-        return orderType;
-    }
-
-    public void setOrderType(int orderType) {
-        this.orderType = orderType;
-    }
-
-    public double getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-    public double getActualAmount() {
-        return actualAmount;
-    }
-
-    public void setActualAmount(double actualAmount) {
-        this.actualAmount = actualAmount;
-    }
-
-    public String getPayId() {
-        return payId;
-    }
-
-    public void setPayId(String payId) {
-        this.payId = payId;
-    }
-
-    public String getUserAddress() {
-        return userAddress;
-    }
-
-    public void setUserAddress(String userAddress) {
-        this.userAddress = userAddress;
-    }
-
-    public String getUaId() {
-        return uaId;
-    }
-
-    public void setUaId(String uaId) {
-        this.uaId = uaId;
-    }
-
-    public String getInvoiceId() {
-        return invoiceId;
-    }
-
-    public void setInvoiceId(String invoiceId) {
-        this.invoiceId = invoiceId;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public boolean isSettlement() {
-        return settlement;
-    }
-
-    public void setSettlement(boolean settlement) {
-        this.settlement = settlement;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser;
-    }
 }
 

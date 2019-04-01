@@ -1,4 +1,4 @@
-package io.renren.orderManagement.repository;
+package io.renren.orderManagement.dao;
 
 import io.renren.orderManagement.entity.UserAddress;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author: 么红帅
  * @date: 2019/3/27 10:38
  */
-public interface UserAddressRepository extends JpaRepository<UserAddress, Integer> {
+public interface UserAddressDao extends JpaRepository<UserAddress, String> {
     UserAddress findByUaId(String uaId);
 }

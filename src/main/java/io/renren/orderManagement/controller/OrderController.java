@@ -2,8 +2,8 @@ package io.renren.orderManagement.controller;
 
 import io.renren.orderManagement.entity.OrderForm;
 import io.renren.orderManagement.entity.UserAddress;
-import io.renren.orderManagement.service.OrderService;
-import io.renren.orderManagement.service.UserAddressService;
+import io.renren.orderManagement.service.Impl.OrderServiceImpl;
+import io.renren.orderManagement.service.Impl.UserAddressServiceImpl;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,10 +20,10 @@ import java.util.Map;
 @RestController
 public class OrderController {
     @Autowired
-    private OrderService orderService;
+    private OrderServiceImpl orderService;
 
     @Autowired
-    private UserAddressService userAddressService;
+    private UserAddressServiceImpl userAddressService;
 
     /**
      * @Author 么红帅
@@ -98,27 +98,27 @@ public class OrderController {
      * @Author 么红帅
      * @Description //TODO 获取对商家的所有评价
      * @Date 13:23 2019/3/29
-     * @Param [mvId, pageNum, pageSize]
+     * @Param [mcId, pageNum, pageSize]
      * @return org.springframework.data.domain.Page<java.lang.Object[]>
      **/
     @GetMapping("/comments")
-    public Page<Object[]> getAllComments(@RequestParam String mvId,
+    public Page<Object[]> getAllComments(@RequestParam String mcId,
                                          @RequestParam(defaultValue = "1",value = "currentPage") Integer pageNum,
                                          @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize) {
-        return orderService.getCommentsByMvId(mvId, pageNum - 1, pageSize);
+        return orderService.getCommentsByMvId(mcId, pageNum - 1, pageSize);
     }
 
     /**
      * @Author 么红帅
      * @Description //TODO 根据评级获取对商家的评价
      * @Date 13:23 2019/3/29
-     * @Param [mvId, star1, star2, pageNum, pageSize]
+     * @Param [mcId, star1, star2, pageNum, pageSize]
      * @return org.springframework.data.domain.Page<java.lang.Object[]>
      **/
     @GetMapping("/comments/star")
-    public Page<Object[]> getCommentsByStar(@RequestParam String mvId, @RequestParam Integer star1, @RequestParam Integer star2,
+    public Page<Object[]> getCommentsByStar(@RequestParam String mcId, @RequestParam Integer star1, @RequestParam Integer star2,
                                             @RequestParam(defaultValue = "1",value = "currentPage") Integer pageNum,
                                             @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize) {
-        return orderService.findCommentsByCommentStar(mvId, star1, star2, pageNum - 1, pageSize);
+        return orderService.findCommentsByCommentStar(mcId, star1, star2, pageNum - 1, pageSize);
     }
 }

@@ -1,18 +1,23 @@
 package io.renren.memberManagement.entity;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
- * @description: 会员表 根据用户模块部分创建的，但是有问题哦，需要和商家模块那边整合一下吧
+ * @description: 会员表 根据3.10部分创建
  * @author: 么红帅
  * @date: 2019/3/24 21:49
  */
 
 @Entity
+@Table(name = "tb_member")
+@Data
 public class Member {
     @Id
-    private int memberId;
+    private Long memberId;
     //会员积分
     private int integral;
     //会员代币
@@ -21,64 +26,8 @@ public class Member {
     private String identity;
     //会员等级id
     private int memberClassId;
-    //用户id
-    private int userId;
+    //用户信息表id
+    private String userInfoId;
     //所属会员分群id
     private int memberGroupId;
-
-    public Integer getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
-    }
-
-    public Integer getIntegral() {
-        return integral;
-    }
-
-    public void setIntegral(int integral) {
-        this.integral = integral;
-    }
-
-    public Integer getToken() {
-        return token;
-    }
-
-    public void setToken(int token) {
-        this.token = token;
-    }
-
-    public String getIdentity() {
-        return identity;
-    }
-
-    public void setIdentity(String identity) {
-        this.identity = identity;
-    }
-
-    public int getMemberClassId() {
-        return memberClassId;
-    }
-
-    public void setMemberClassId(int memberClassId) {
-        this.memberClassId = memberClassId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getMemberGroupId() {
-        return memberGroupId;
-    }
-
-    public void setMemberGroupId(int memberGroupId) {
-        this.memberGroupId = memberGroupId;
-    }
 }

@@ -1,4 +1,4 @@
-package io.renren.orderManagement.repository;
+package io.renren.orderManagement.dao;
 
 import io.renren.orderManagement.entity.OrderForm;
 import org.apache.ibatis.annotations.Param;
@@ -8,14 +8,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import java.util.List;
-
 /**
  * @description:
  * @author: 么红帅
  * @date: 2019/3/25 15:49
  */
-public interface OrderRepository extends PagingAndSortingRepository<OrderForm, Integer>, JpaRepository<OrderForm, Integer> {
+public interface OrderDao extends PagingAndSortingRepository<OrderForm, String>, JpaRepository<OrderForm, String> {
     Page<OrderForm> findAllByMerchantInfoId(Pageable page, String merchantInfoId);
 
     Page<OrderForm> findAllByMerchantInfoIdAndOrderStatus(Pageable page, String merchantInfoId, Integer orserStatus);
@@ -24,15 +22,15 @@ public interface OrderRepository extends PagingAndSortingRepository<OrderForm, I
 
     /**
      * @Author 么红帅
-     * @Description //TODO 查询对当前商家的商品的所有评论
+     * @Description 查询对当前商家的商品的所有评论
      * @Date 18:17 2019/3/28
      * @Param [mvId, page]
      * @return org.springframework.data.domain.Page<java.lang.Object[]>
      **/
-    @Query(value = "select ci.goodsName,ui.userInfoName,ct.commentStar,ct.createTime,ct.commentContent\n" +
-            "from CommentTb ct,CommodityInfo ci,UserInfo ui\n" +
-            "where ct.commodityId=ci.goodsId and ui.userInfoId=ct.userInfoId and ci.mvId=?1")
-    Page<Object[]> findComment(@Param("mvId") String mvId, Pageable page);
+    @Query(value = "select ci.goodsName,cui.userName,ct.commentStar,ct.createTime,ct.commentContent\n" +
+            "from CommentTb ct,CommodityInfo ci,CustomerUserInfo cui\n" +
+            "where ct.commodityId=ci.goodsId and cui.userInfoId=ct.userInfoId and ci.mcId=?1")
+    Page<Object[]> findComment(@Param("mcId") String mcId, Pageable page);
 
     /**
      * @Author 么红帅
@@ -41,11 +39,11 @@ public interface OrderRepository extends PagingAndSortingRepository<OrderForm, I
      * @Param [mvId, star1, star2, page]
      * @return org.springframework.data.domain.Page<java.lang.Object[]>
      **/
-    @Query(value = "select ci.goodsName,ui.userInfoName,ct.commentStar,ct.createTime,ct.commentContent\n" +
-            "from CommentTb ct,CommodityInfo ci,UserInfo ui\n" +
-            "where ct.commodityId=ci.goodsId and ui.userInfoId=ct.userInfoId\n" +
-            "and ci.mvId=?1 and ct.commentStar between ?2 and ?3")
-    Page<Object[]> findCommentByStar(@Param("mvId") String mvId, 
+    @Query(value = "select ci.goodsName,cui.userName,ct.commentStar,ct.createTime,ct.commentContent\n" +
+            "from CommentTb ct,CommodityInfo ci,CustomerUserInfo cui\n" +
+            "where ct.commodityId=ci.goodsId and cui.userInfoId=ct.userInfoId\n" +
+            "and ci.mcId=?1 and ct.commentStar between ?2 and ?3")
+    Page<Object[]> findCommentByStar(@Param("mcId") String mcId,
                                      @Param("star1") Integer star1,
                                      @Param("star2") Integer star2,
                                      Pageable page);

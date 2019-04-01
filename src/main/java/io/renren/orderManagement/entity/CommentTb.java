@@ -1,15 +1,24 @@
 package io.renren.orderManagement.entity;
 
+import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * @description: 评论表
+ * @description: 商品评论表
  * @author: 么红帅
  * @date: 2019/3/28 9:47
  */
 @Entity
+@Table(name = "comment")
+@Data
+@EntityListeners(AuditingEntityListener.class)
 public class CommentTb {
     //用户商品评论表主键
     @Id
@@ -37,109 +46,6 @@ public class CommentTb {
     //审核时间
     private Date auditTime;
     //创建时间
+    @CreatedDate
     private Date createTime;
-
-    public String getCommentId() {
-        return commentId;
-    }
-
-    public void setCommentId(String commentId) {
-        this.commentId = commentId;
-    }
-
-    public String getUserInfoId() {
-        return userInfoId;
-    }
-
-    public void setUserInfoId(String userInfoId) {
-        this.userInfoId = userInfoId;
-    }
-
-    public String getCommodityId() {
-        return commodityId;
-    }
-
-    public void setCommodityId(String commodityId) {
-        this.commodityId = commodityId;
-    }
-
-    public int getCommentStar() {
-        return commentStar;
-    }
-
-    public void setCommentStar(int commentStar) {
-        this.commentStar = commentStar;
-    }
-
-    public String getCommentContent() {
-        return commentContent;
-    }
-
-    public void setCommentContent(String commentContent) {
-        this.commentContent = commentContent;
-    }
-
-    public int getCommentType() {
-        return commentType;
-    }
-
-    public void setCommentType(int commentType) {
-        this.commentType = commentType;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getColumnPath() {
-        return columnPath;
-    }
-
-    public void setColumnPath(String columnPath) {
-        this.columnPath = columnPath;
-    }
-
-    public int getColumnDepth() {
-        return columnDepth;
-    }
-
-    public void setColumnDepth(int columnDepth) {
-        this.columnDepth = columnDepth;
-    }
-
-    public boolean isAudit() {
-        return audit;
-    }
-
-    public void setAudit(boolean audit) {
-        this.audit = audit;
-    }
-
-    public String getAuditUser() {
-        return auditUser;
-    }
-
-    public void setAuditUser(String auditUser) {
-        this.auditUser = auditUser;
-    }
-
-    public Date getAuditTime() {
-        return auditTime;
-    }
-
-    public void setAuditTime(Date auditTime) {
-        this.auditTime = auditTime;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
 }
