@@ -24,7 +24,7 @@ public interface OrderDao extends PagingAndSortingRepository<OrderForm, String>,
      * @Author 么红帅
      * @Description 查询对当前商家的商品的所有评论
      * @Date 18:17 2019/3/28
-     * @Param [mvId, page]
+     * @Param [mcId, page]
      * @return org.springframework.data.domain.Page<java.lang.Object[]>
      **/
     @Query(value = "select ci.goodsName,cui.userName,ct.commentStar,ct.createTime,ct.commentContent\n" +
@@ -36,7 +36,7 @@ public interface OrderDao extends PagingAndSortingRepository<OrderForm, String>,
      * @Author 么红帅
      * @Description //TODO 根据评级筛选评价，1-2为差评，3-3为中评，4-5为差评
      * @Date 19:01 2019/3/28
-     * @Param [mvId, star1, star2, page]
+     * @Param [mcId, star1, star2, page]
      * @return org.springframework.data.domain.Page<java.lang.Object[]>
      **/
     @Query(value = "select ci.goodsName,cui.userName,ct.commentStar,ct.createTime,ct.commentContent\n" +
