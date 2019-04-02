@@ -27,13 +27,12 @@ public class OrderController {
 
     /**
      * @Author 么红帅
-     * @Description 获取所有订单的分页数据
+     * @Description TODO 获取所有订单的分页数据，缺少字段
      * @Date 12:54 2019/3/26
      * @Param [merchantInfoId, pageNum为1...n的数据，调用时代码会自动-1, pageSize]
      * @return
      **/
     @GetMapping("/orderList")
-    //每一条记录还是所有字段，还未筛选
     public Page<OrderForm> getOrderList(@RequestParam String merchantInfoId,
                                         @RequestParam(defaultValue = "1",value = "currentPage") Integer pageNum,
                                         @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize) {
@@ -42,7 +41,7 @@ public class OrderController {
 
     /**
      * @Author 么红帅
-     * @Description 根据订单状态获取订单的分页数据
+     * @Description TODO 根据订单状态获取订单的分页数据，缺少字段
      * @Date 23:28 2019/3/27
      * @Param [merchantInfoId, orderStatus, pageNum, pageSize]
      * @return

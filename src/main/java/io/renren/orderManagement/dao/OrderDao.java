@@ -16,7 +16,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface OrderDao extends PagingAndSortingRepository<OrderForm, String>, JpaRepository<OrderForm, String> {
     Page<OrderForm> findAllByMerchantInfoId(Pageable page, String merchantInfoId);
 
-    Page<OrderForm> findAllByMerchantInfoIdAndOrderStatus(Pageable page, String merchantInfoId, Integer orserStatus);
+    Page<OrderForm> findAllByMerchantInfoIdAndOrderStatus(Pageable page, String merchantInfoId, Integer orderStatus);
 
     OrderForm findBySeriesNum(String seriesNum);
 
