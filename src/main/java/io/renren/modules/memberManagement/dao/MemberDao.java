@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
  * @author: 么红帅
  * @date: 2019/3/24 22:06
  */
-public interface MemberDao extends JpaRepository<Member, Long> {
+public interface MemberDao extends JpaRepository<Member, String> {
 
     /**
      * @Author 么红帅

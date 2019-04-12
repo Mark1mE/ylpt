@@ -18,7 +18,7 @@ import java.util.Date;
 public class CustomerUserInfo {
     @Id
     //用户id
-    private Long customerInfoId;
+    private String customerInfoId;
     //用户信息表主键
     private String userInfoId;
     //用户名

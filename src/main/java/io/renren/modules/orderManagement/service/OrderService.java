@@ -2,7 +2,9 @@ package io.renren.modules.orderManagement.service;
 
 import io.renren.modules.orderManagement.dto.OrderList;
 import io.renren.modules.orderManagement.dto.UserReview;
+import io.renren.modules.orderManagement.entity.MerchantFeedback;
 import io.renren.modules.orderManagement.entity.OrderForm;
+import io.renren.modules.orderManagement.entity.OrderSetting;
 import org.springframework.data.domain.Page;
 
 /**
@@ -22,4 +24,12 @@ public interface OrderService {
     Page<UserReview> getCommentsByMcId(String mcId, Integer pageNum, Integer pageSize);
 
     Page<UserReview> findCommentsByCommentStar(String mcId, Integer star1, Integer star2, Integer pageNum, Integer pageSize);
+
+    void mcFeedbackUser(MerchantFeedback merchantFeedback);
+
+    Page<OrderList> getAlreadyFeedBack(String mcId, Integer pageNum, Integer pageSize);
+
+    Page<OrderList> getNotFeedBack(String mcId, Integer pageNum, Integer pageSize);
+
+    void doOrderSetting(OrderSetting orderSetting);
 }

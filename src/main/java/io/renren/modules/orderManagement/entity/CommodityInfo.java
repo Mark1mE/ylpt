@@ -23,8 +23,7 @@ public class CommodityInfo {
      * 商品id
      */
     @Id
-    @GeneratedValue
-    private Long cId;
+    private String cId;
 
     /**
      * 商家id，外键

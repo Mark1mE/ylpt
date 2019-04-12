@@ -17,9 +17,8 @@ import javax.persistence.Table;
 @Data
 public class OrderSetting {
     @Id
-    @GeneratedValue
     //订单设置id
-    private Long orderSettingId;
+    private String orderSettingId;
     //商家信息id
     private String merchantInfoId;
     //订单取消时间，拍下未付款超时后则取消订单

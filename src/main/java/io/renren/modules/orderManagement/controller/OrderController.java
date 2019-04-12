@@ -2,7 +2,9 @@ package io.renren.modules.orderManagement.controller;
 
 import io.renren.modules.orderManagement.dto.OrderList;
 import io.renren.modules.orderManagement.dto.UserReview;
+import io.renren.modules.orderManagement.entity.MerchantFeedback;
 import io.renren.modules.orderManagement.entity.OrderForm;
+import io.renren.modules.orderManagement.entity.OrderSetting;
 import io.renren.modules.orderManagement.entity.UserAddress;
 import io.renren.modules.orderManagement.service.Impl.OrderServiceImpl;
 import io.renren.modules.orderManagement.service.Impl.UserAddressServiceImpl;
@@ -32,7 +34,7 @@ public class OrderController {
 
     /**
      * @Author 么红帅
-     * @Description 获取所有订单的分页数据
+     * @Description 获取当前商家所有订单的分页数据
      * @Date 12:54 2019/3/26
      * @Param [merchantInfoId, pageNum为1...n的数据，调用时代码会自动-1, pageSize]
      * @return
@@ -47,7 +49,7 @@ public class OrderController {
 
     /**
      * @Author 么红帅
-     * @Description 根据订单状态获取订单的分页数据
+     * @Description 根据订单状态查询当前商家的所有订单
      * @Date 23:28 2019/3/27
      * @Param [merchantInfoId, orderStatus, pageNum, pageSize]
      * @return
@@ -58,7 +60,6 @@ public class OrderController {
                                         @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize) {
         return orderService.findAllOrdersByStatusAndPage(merchantInfoId, orderStatus, pageNum - 1, pageSize);
     }
-
 
     /**
      * @Author 么红帅
@@ -114,9 +115,9 @@ public class OrderController {
 
     /**
      * @Author 么红帅
-     * @Description //TODO 根据评级获取对商家的评价
-     * @Date 13:23 2019/3/29
-     * @Param [mcId, star1, star2, pageNum, pageSize]
+     * @Description //TODO 根据评级筛选评价，1-2为差评，3-3为中评，4-5为差评
+     * @Date 19:01 2019/3/28
+     * @Param [mcId, star1, star2, page]
      * @return org.springframework.data.domain.Page<java.lang.Object[]>
      **/
     @GetMapping("/comments/star")
@@ -124,5 +125,66 @@ public class OrderController {
                                               @RequestParam(defaultValue = "1",value = "currentPage") Integer pageNum,
                                               @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize) {
         return orderService.findCommentsByCommentStar(mcId, star1, star2, pageNum - 1, pageSize);
+    }
+
+    /**
+     * @Author 么红帅
+     * @Description 商家对订单中的用户进行评价
+     * @Date 19:23 2019/4/9
+     * @Param [mcId, seriesNum, score, backContent, feedbackPhoto]
+     * @return void
+     **/
+    @PostMapping("/orderList/mcFeedback")
+    public void mcFeedback(@RequestParam Long mcId, @RequestParam String seriesNum, @RequestParam Integer score,
+                           @RequestParam String backContent, @RequestParam String feedbackPhoto) {
+        MerchantFeedback merchantFeedback = new MerchantFeedback(mcId, seriesNum, score, backContent, feedbackPhoto);
+        // TODO 需要主键生成算法
+        merchantFeedback.setEvaluationId("zijisheding");
+        orderService.mcFeedbackUser(merchantFeedback);
+    }
+
+    /**
+     * @Author 么红帅
+     * @Description 查询商家订单中商家已对用户做出评价的订单
+     * @Date 19:23 2019/4/9
+     * @Param [merchantInfoId, pageNum, pageSize]
+     * @return org.springframework.data.domain.Page<io.renren.modules.orderManagement.dto.OrderList>
+     **/
+    @GetMapping("/orderList/mcFeedback/already")
+    public Page<OrderList> getAlreadyFeedback(@RequestParam String merchantInfoId,
+                                        @RequestParam(defaultValue = "1",value = "currentPage") Integer pageNum,
+                                        @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize) {
+        Page<OrderList> page = orderService.getAlreadyFeedBack(merchantInfoId, pageNum - 1, pageSize);
+        return page;
+    }
+
+    /**
+     * @Author 么红帅
+     * @Description 查询商家订单中商家未对用户做出评价的订单
+     * @Date 22:01 2019/4/10
+     * @Param [merchantInfoId, pageNum, pageSize]
+     * @return org.springframework.data.domain.Page<io.renren.modules.orderManagement.dto.OrderList>
+     **/
+    @GetMapping("/orderList/mcFeedback/not")
+    public Page<OrderList> getNotFeedback(@RequestParam String merchantInfoId,
+                                              @RequestParam(defaultValue = "1",value = "currentPage") Integer pageNum,
+                                              @RequestParam(defaultValue = "10",value = "pageSize") Integer pageSize) {
+        Page<OrderList> page = orderService.getNotFeedBack(merchantInfoId, pageNum - 1, pageSize);
+        return page;
+    }
+    
+    @PostMapping("/orderSetting")
+    public void doOrderSetting(@RequestParam("merchantInfoId") String merchantInfoId,
+                               @RequestParam("orderCancelTime") Integer orderCancelTime,
+                               @RequestParam("automaticConfirmTime") Integer automaticConfirmTime,
+                               @RequestParam("serviceCompleteTime") Integer serviceCompleteTime) {
+        OrderSetting orderSetting = new OrderSetting();
+        // TODO 主键生成
+        orderSetting.setOrderSettingId("daishezhi");
+        orderSetting.setMerchantInfoId(merchantInfoId);
+        orderSetting.setOrderCancelTime(orderCancelTime);
+        orderSetting.setAutomaticConfirmTime(automaticConfirmTime);
+        orderSetting.setServiceCompleteTime(serviceCompleteTime);
+        orderService.doOrderSetting(orderSetting);
     }
 }

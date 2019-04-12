@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class MemberClass {
     @Id
     //会员等级id
-    private Long memberClassId;
+    private String memberClassId;
     //会员等级名称
     private String memberClassName;
     //备用字段

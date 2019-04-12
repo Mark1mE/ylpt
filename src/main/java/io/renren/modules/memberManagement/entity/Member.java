@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Data
 public class Member {
     @Id
-    private Long memberId;
+    private String memberId;
     //会员积分
     private int integral;
     //会员代币

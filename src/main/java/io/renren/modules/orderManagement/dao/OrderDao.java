@@ -16,27 +16,13 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface OrderDao extends JpaRepository<OrderForm, String> {
 
-    /**
-     * @Author 么红帅
-     * @Description 查询当前商家的所有订单
-     * @Date 19:37 2019/4/8
-     * @Param [page, merchantInfoId]
-     * @return org.springframework.data.domain.Page<io.renren.modules.orderManagement.dto.OrderList>
-     **/
     @Query(value="select new io.renren.modules.orderManagement.dto.OrderList(" +
             "ordf.seriesNum,ordf.orderStatus,ordf.createTime,ordf.totalAmount,ordf.actualAmount,ordf.orderType,ordf.paymentMethod," +
             "ua.receiverName,ua.receiverPhone,ordf.userAddress)\n" +
             "from OrderForm ordf,UserAddress ua " +
-            "where ordf.uaId=ua.uaId and ordf.merchantInfoId=?1 ")
+            "where ordf.uaId=ua.uaId and ordf.merchantInfoId=?1")
     Page<OrderList> getAllOrdersPage(@Param("merchantInfoId") String merchantInfoId, Pageable page);
 
-    /**
-     * @Author 么红帅
-     * @Description 根据订单状态查询当前商家的所有订单
-     * @Date 19:40 2019/4/8
-     * @Param [page, merchantInfoId, orderStatus]
-     * @return org.springframework.data.domain.Page<io.renren.modules.orderManagement.dto.OrderList>
-     **/
     @Query(value = "select new io.renren.modules.orderManagement.dto.OrderList(" +
             "ordf.seriesNum,ordf.orderStatus,ordf.createTime,ordf.totalAmount,ordf.actualAmount,ordf.orderType,ordf.paymentMethod," +
             "ua.receiverName,ua.receiverPhone,ordf.userAddress)\n" +
@@ -59,13 +45,6 @@ public interface OrderDao extends JpaRepository<OrderForm, String> {
             "where ct.commodityId=ci.cId and cui.userInfoId=ct.userInfoId and ci.merchantInfoId=?1")
     Page<UserReview> getAllCommentsPage(@Param("mcId") String mcId, Pageable page);
 
-    /**
-     * @Author 么红帅
-     * @Description //TODO 根据评级筛选评价，1-2为差评，3-3为中评，4-5为差评
-     * @Date 19:01 2019/3/28
-     * @Param [mcId, star1, star2, page]
-     * @return org.springframework.data.domain.Page<java.lang.Object[]>
-     **/
     @Query(value = "select new io.renren.modules.orderManagement.dto.UserReview(" +
             "ci.publicityPhoto,ci.commodityName,cui.userName,ct.commentStar,ct.createTime,ct.commentContent)\n" +
             "from CommentTb ct,CommodityInfo ci,CustomerUserInfo cui\n" +
@@ -75,4 +54,20 @@ public interface OrderDao extends JpaRepository<OrderForm, String> {
                                        @Param("star1") Integer star1,
                                        @Param("star2") Integer star2,
                                        Pageable page);
+
+    @Query(value = "select new io.renren.modules.orderManagement.dto.OrderList(" +
+            "ordf.seriesNum,ordf.orderStatus,ordf.createTime,ordf.totalAmount,ordf.actualAmount,ordf.orderType,ordf.paymentMethod," +
+            "ua.receiverName,ua.receiverPhone,ordf.userAddress)\n" +
+            "from OrderForm ordf,UserAddress ua\n" +
+            "where ordf.uaId=ua.uaId and ordf.merchantInfoId=?1 and ordf.seriesNum in (" +
+            "select seriesNum from MerchantFeedback mf where mf.mcId=?1)")
+    Page<OrderList> getAlreadyFeedBack(@Param("mcId") String mcId, Pageable page);
+
+    @Query(value = "select new io.renren.modules.orderManagement.dto.OrderList(" +
+            "ordf.seriesNum,ordf.orderStatus,ordf.createTime,ordf.totalAmount,ordf.actualAmount,ordf.orderType,ordf.paymentMethod," +
+            "ua.receiverName,ua.receiverPhone,ordf.userAddress)\n" +
+            "from OrderForm ordf,UserAddress ua\n" +
+            "where ordf.uaId=ua.uaId and ordf.merchantInfoId=?1 and ordf.seriesNum not in (" +
+            "select seriesNum from MerchantFeedback mf where mf.mcId=?1)")
+    Page<OrderList> getNotFeedBack(@Param("mcId") String mcId, Pageable page);
 }
